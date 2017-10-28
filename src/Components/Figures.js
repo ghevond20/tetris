@@ -7,8 +7,12 @@ export default  class Figures extends Component {
     this.state = {
       figurs:[
       this.DefaultFigureL(),
-        this.DefaultFigureJ(),
-        this.DefaultFigureT()
+      this.DefaultFigureJ(),
+      this.DefaultFigureT(),
+      this.DefaultFigureReverseT(),
+      this.DefaultFigureCube(),
+      this.DefaultFigureI(),
+      this.DefaultFigureDot()
       ]
     }
   }
@@ -26,24 +30,58 @@ export default  class Figures extends Component {
   DefaultFigureT = () =>{
     return {
       board:[[1,0],[1,1],[1,0]],
-      length: 4,
-      color: '#ad4e9e'
+      color: 'green',
+      type: 'T'
     }
   }
+
+  DefaultFigureDot = () =>{
+    return {
+      board:[[1]],
+      color: 'blue',
+      type: 'Dot'
+    }
+  }
+
+  DefaultFigureReverseT = () =>{
+    return {
+      board:[[0,1],[1,1],[0,1]],
+      color: '#ad2e9e',
+      type: 'ReverseT'
+    }
+  }
+
+  DefaultFigureCube = () =>{
+    return {
+      board:[[1,1],[1,1]],
+      color: 'black',
+      type: 'Cube'
+    }
+  }
+
+
+  DefaultFigureI = () =>{
+    return {
+      board:[[1],[1],[1],[1]],
+      color: 'red',
+      type: 'I'
+    }
+  }
+
 
   DefaultFigureJ = () =>{
     return {
       board:[[0,1],[0,1],[1,1]],
-      length: 4,
-      color: '#ef7a38'
+      color: '#ef7a38',
+      type: 'J'
     }
   }
 
   DefaultFigureL = () =>{
       return {
         board:[[1,0],[1,0],[1,1]],
-        length: 4,
-        color: '#3365f9'
+        color: '#3365f9',
+        type: 'L'
       }
   }
 

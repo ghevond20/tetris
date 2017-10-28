@@ -7,7 +7,7 @@ export default  class Board extends Component {
   constructor(props){
     super(props)
     this.state= {
-      board: [[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0]]
+      board: this.getDefaultBoard(10,10)
     }
   }
 
@@ -15,10 +15,24 @@ export default  class Board extends Component {
     Emitter.addListener('newFigureIsSet', this.newFigureIsSet)
   }
 
+  getDefaultBoard = (rowNum, colNum) => {
+    let boardArr = []
+
+    for (var i = 0; i <= rowNum; i++) {
+      boardArr[i] = []
+      for (var j = 0; j <= colNum; j++) {
+        boardArr[i][j] = 0
+      }
+    }
+
+    return boardArr
+  }
+
+
   newFigureIsSet = (newFigure)=>{
-    let newBoard = utils.setFigureInBoard(this.state.board, newFigure)
-    if(newBoard.status === 'ok'){
-      this.setState({board:newBoard.data})
+    let result = utils.setFigureInBoard(this.state.board, newFigure)
+    if(result.status === 'ok'){
+      this.setState({board:result.board})
     }else {
       alert(1111)
     }
@@ -30,7 +44,15 @@ export default  class Board extends Component {
     return (
       <table>
         {this.state.board.map(line =>
-          (<tr>{(line.map(item => (<td>{item}</td>)))}</tr>))
+          (<tr>{(line.map(item => {
+            let defaultColor = '#fffff'
+            if(item !== 0){
+              defaultColor = item.color
+            }
+
+            return(<td style = {{backgroundColor: defaultColor}}>{
+
+          }</td>)}))}</tr>))
         }
       </table>
     )
