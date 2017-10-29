@@ -6,25 +6,28 @@ export default  class Figures extends Component {
     super(props)
     this.state = {
       figurs:[
-      this.DefaultFigureL(),
-      this.DefaultFigureJ(),
-      this.DefaultFigureT(),
-      this.DefaultFigureReverseT(),
-      this.DefaultFigureCube(),
-      this.DefaultFigureI(),
-      this.DefaultFigureDot()
-      ]
+        this.DefaultFigureL(),
+        this.DefaultFigureJ(),
+        this.DefaultFigureT(),
+        this.DefaultFigureReverseT(),
+        this.DefaultFigureCube(),
+        this.DefaultFigureI(),
+        this.DefaultFigureDot()
+      ],
+      currentFigure: null
     }
   }
+
   componentWillMount() {
+    this.setState({currentFigure: this.getNewFigure()})
     Emitter.addListener('onGetNewFigure', this.getNewFigure)
   }
 
   getNewFigure = () => {
     let length = this.state.figurs.length
     let index = Math.round(Math.random()*(length - 1))
-    let newFigure = this.state.figurs[index]
-    Emitter.emit('newFigureIsSet', newFigure)
+    let currentFigure = this.state.figurs[index]
+    return currentFigure
   }
 
   DefaultFigureT = () =>{
@@ -85,9 +88,34 @@ export default  class Figures extends Component {
       }
   }
 
-  render() {
-    return (<div>
+  getFigureTemplate = () =>{
+  const board = this.state.currentFigure.board
+  return (<table className="item">{
+      board.map((line, i)=>{
+           return (<tr className={this.state.currentFigure.type}>{
+          line.map((item, j)=>{
+            let defaultColor = '#fff'
+            if(item === 1){
+              defaultColor = this.state.currentFigure.color
+            }
+            return (<td style={{backgroundColor:defaultColor}}></td>)
+          })
+        }</tr>)
+      })
+    }</table>)
+  }
 
+  onClickFigure = () => {
+    Emitter.emit('onClickFigure', this.state.currentFigure)
+  }
+
+  render() {
+    if(!this.state.currentFigure){
+      return (<div>Loading...</div>)
+    }
+
+    return (<div className="singleFigure" onClick={this.onClickFigure}>
+        {this.getFigureTemplate()}
       </div>
     );
   }

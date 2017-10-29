@@ -13,7 +13,7 @@ export const setFigureInBoard = (board, figure) => {
 
 
 
-const placeFigure = (board, rowIndex, colIndex, figure)=>{
+export const placeFigure = (board, rowIndex, colIndex, figure)=>{
   const figureLength = getFigureLength(figure)
 
   if(board[rowIndex].length >= colIndex + figureLength.colLength && board[rowIndex + figureLength.rowLength - 1]){
@@ -22,13 +22,13 @@ const placeFigure = (board, rowIndex, colIndex, figure)=>{
   return false
 }
 
-const getFigureLength = (figure)=>{
+export const getFigureLength = (figure)=>{
   let rowLength = figure.board.length
   let colLength = figure.board[0].length
   return {rowLength, colLength}
 }
 
-const isFigurePositionValid = (board, rowIndex, colIndex, figure) =>{
+export const isFigurePositionValid = (board, rowIndex, colIndex, figure) =>{
   if(!placeFigure(board, rowIndex, colIndex,figure)){
     return false
   }
@@ -39,7 +39,7 @@ const isFigurePositionValid = (board, rowIndex, colIndex, figure) =>{
 
   figure.board.forEach((row, i)=>{
     row.forEach((item, j)=>{
-      if (board[rInd][cInd]!==0 && figure.board[i][j]==1 && res){
+      if (board[rInd][cInd]!==0 && figure.board[i][j]===1 && res){
         res = false;
       }
 
@@ -56,22 +56,20 @@ const isFigurePositionValid = (board, rowIndex, colIndex, figure) =>{
 }
 
 
-const insertFigureInBoard = (board, rowIndex, colIndex,figure) =>{
+export const insertFigureInBoard = (board, rowIndex, colIndex,figure) =>{
   let rInd = rowIndex;
   let cInd = colIndex;
 
   let result = {status:'ok', board:board};
   figure.board.forEach((row, i)=>{
     row.forEach((item, j)=>{
-      if (board[rInd][cInd]!== 0 && figure.board[i][j]==1 && result.status !=="error"){
+      if (board[rInd][cInd]!== 0 && figure.board[i][j]===1 && result.status !=="error"){
         result.status = "error";
-      }else if (figure.board[i][j]==1){
+      }else if (figure.board[i][j]===1){
         result.board[rInd][cInd] = figure;
       }
-
       cInd++;
     }
-
   )
   cInd = colIndex;
   rInd++;
