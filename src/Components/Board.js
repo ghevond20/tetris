@@ -47,7 +47,7 @@ onMouseOut= () => {
   }
 
   this.setState({virtualBoard:this.state.board})
-  console.log('virtualBoard')
+    console.log('virtualBoard')
   }
 
   componentWillUpdate(){
@@ -73,7 +73,6 @@ onMouseOut= () => {
     }else {
       console.log(1111)
     }
-
   }
 
 
