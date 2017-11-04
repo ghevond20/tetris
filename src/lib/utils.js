@@ -7,7 +7,6 @@ export const setFigureInBoard = (board, figure) => {
             }
       })
   });
-
   return result;
 }
 
@@ -34,46 +33,42 @@ export const isFigurePositionValid = (board, rowIndex, colIndex, figure) =>{
   }
   let rInd = rowIndex;
   let cInd = colIndex;
-
   let res = true;
 
   figure.board.forEach((row, i)=>{
     row.forEach((item, j)=>{
-      if (board[rInd][cInd]!==0 && figure.board[i][j]===1 && res){
-        res = false;
+        if (board[rInd][cInd]!==0 && figure.board[i][j]===1 && res){
+          res = false;
+        }
+        cInd++;
       }
-
-      cInd++;
-    }
-
-  )
-
+    )
     cInd = colIndex;
     rInd++;
   })
-
   return res;
 }
 
 
-export const insertFigureInBoard = (board, rowIndex, colIndex,figure) =>{
+export const insertFigureInBoard = (board, rowIndex, colIndex, figure) =>{
   let rInd = rowIndex;
   let cInd = colIndex;
-
-  let result = {status:'ok', board:board};
-  figure.board.forEach((row, i)=>{
-    row.forEach((item, j)=>{
-      if (board[rInd][cInd]!== 0 && figure.board[i][j]===1 && result.status !=="error"){
-        result.status = "error";
-      }else if (figure.board[i][j]===1){
-        result.board[rInd][cInd] = figure;
-      }
-      cInd++;
-    }
-  )
-  cInd = colIndex;
-  rInd++;
+  let result = {status:'ok', board: []};
+  board.forEach((is, isindex)=>{
+      result.board.push(is.slice(0))
   })
-
+  figure.board.forEach((row, i)=>{
+      row.forEach((item, j)=>{
+          if (result.board[rInd][cInd]!== 0 && figure.board[i][j]===1 && result.status !=="error"){
+            result.status = "error";
+          }else if (figure.board[i][j]===1){
+            result.board[rInd][cInd] = figure;
+          }
+          cInd++;
+        }
+      )
+    cInd = colIndex;
+    rInd++;
+  })
   return result; //{status: 'ok' , newBoard}
 }

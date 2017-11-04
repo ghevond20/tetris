@@ -9,7 +9,7 @@ export default  class Board extends Component {
   constructor(props){
     super(props)
     this.state= {
-      board: this.getDefaultBoard(Constants.BOARD_ROW_COUNT,Constants.BOARD_COL_COUNT),
+      board1: this.getDefaultBoard1(Constants.BOARD_ROW_COUNT,Constants.BOARD_COL_COUNT),
       virtualBoard: this.getDefaultBoard(Constants.BOARD_ROW_COUNT,Constants.BOARD_COL_COUNT),
       selectedFigure: null
     }
@@ -24,7 +24,16 @@ export default  class Board extends Component {
   onClickFigure = (selectedFigure) =>{
     this.setState({selectedFigure})
   }
-
+  getDefaultBoard1 = (rowNum, colNum) => {
+    let boardArr = []
+    for (var i = 0; i <= rowNum; i++) {
+      boardArr[i] = []
+      for (var j = 0; j <= colNum; j++) {
+        boardArr[i][j] = 0
+      }
+    }
+    return boardArr
+  }
   getDefaultBoard = (rowNum, colNum) => {
     let boardArr = []
     for (var i = 0; i <= rowNum; i++) {
@@ -37,10 +46,10 @@ export default  class Board extends Component {
   }
 
   clickInBoardItem = () => {
-    this.setState({board: this.state.virtualBoard, selectedFigure: null})
+    this.setState({board1: this.state.virtualBoard, selectedFigure: null})
   }
 
-onMouseOut= () => {
+onMouseOut = () => {
   return
   if(!this.state.selectedFigure){
     return
@@ -58,26 +67,30 @@ onMouseOut= () => {
     if(!this.state.selectedFigure){
       return
     }
+    let result = {status: 'ok'}
 
-
-    let result = {status: 'ok', board:this.state.board}
     if(utils.isFigurePositionValid(this.state.virtualBoard, params.rowIndex, params.colIndex, this.state.selectedFigure)){
       result = utils.insertFigureInBoard(this.state.virtualBoard, params.rowIndex, params.colIndex, this.state.selectedFigure)
     }
-
     //let result = utils.setFigureInBoard(this.state.board, this.state.selectedFigure)
   //  this.setState({virtualBoard: this.state.board})
+    console.log('state.board', this.state.board1);
+    console.log('result.board', result.board);
+    console.log('state.virtualBoard', this.state.virtualBoard);
     if(result.status === 'ok'){
       this.setState({virtualBoard: result.board})
-      console.log("result.status === 'ok'");
     }else {
+<<<<<<< HEAD
       console.log(1111)
+=======
+
+>>>>>>> 1abc018d06cfd505a4d4e72210902540f99c842b
     }
   }
 
 
   printBoardTable = ()=>{
-    let board = this.state.board
+    let board = this.state.board1
     if(this.state.selectedFigure){
       board = this.state.virtualBoard
       console.log('  board = this.state.virtualBoard');
@@ -85,7 +98,8 @@ onMouseOut= () => {
 
     return (
             <table>
-              {board.map((line ,rowIndex) =>
+              {
+                board.map((line ,rowIndex) =>
                 (<tr>{(line.map((item, colIndex) => {
                   let defaultColor = '#fffff'
                   if(item !== 0){
